@@ -2,7 +2,7 @@
 ## To Run this project flow this steps
 
 # First Step
-- Clone the repository ` https://github.com/rex10/Login-notes-module.git `
+- Clone the repository ` https://github.com/rex10/React-Login.git `
 
 # Second Step 
 - Install packages ` npm install` or `yarn install`

@@ -12,3 +12,7 @@
 
 # Fourth Step
 - Run Application `npm start`
+
+# Login Credential
+- username `rexchristian`
+- password `rex1234`

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import './Login.styles.scss'
 import axios from 'axios';
-import { setUserSession } from './Utils/Common';
+import { setUserSession } from '../Utils/Common';
 
 function Login(props) {
   const [loading, setLoading] = useState(false);
@@ -24,19 +25,18 @@ function Login(props) {
   }
 
   return (
-    <div>
-      Login<br /><br />
-      <div>
-        Username<br />
-        <input type="text" {...username} autoComplete="new-username" />
+    <form onSubmit={handleLogin} >
+      <div className='container'>
+        <h4>Login Form</h4>
+          <label for="uname"><b>Username</b></label><br/>
+          <input type="text" {...username} autoComplete="new-username"  required /><br/>
+          <label for="psw"><b>Password</b></label><br/>
+          <input type="password" {...password} autoComplete="new-password" required /><br/>
+          {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
+          <button type='submit' value={loading ? 'Loading...' : 'Login'} disabled={loading} >Login</button>
+      
       </div>
-      <div style={{ marginTop: 10 }}>
-        Password<br />
-        <input type="password" {...password} autoComplete="new-password" />
-      </div>
-      {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-      <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />
-    </div>
+    </form>
   );
 }
 

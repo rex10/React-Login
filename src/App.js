@@ -1,36 +1,50 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './redux/createStore';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import Home from './components/Home';
-import PrivateRoute from './Utils/PrivateRoute';
-import PublicRoute from './Utils/PublicRoute';
+import Home from './components/Home/Home';
+import { PrivateRoute } from './Utils/PrivateRoute';
+import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-      <Provider store={store}>
-        <div>
-          <div className="header">
-            <NavLink exact activeClassName="active" to="/">Home</NavLink>
-            <NavLink activeClassName="active" to="/login">Login</NavLink>
-            <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink>
-          </div>
-          <div className="content">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <PublicRoute path="/login" component={Login} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
-            </Switch>
-          </div>
-        </div>
-        </Provider>
-      </BrowserRouter>
-    </div>
-  );
+import { history } from '../src/helpers';
+import { alertActions } from '../src/actions';
+
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    const { dispatch } = this.props;
+    history.listen((location, action) => {
+        // clear alert on location change
+        dispatch(alertActions.clear());
+    });
 }
 
-export default App;
+render(){
+  const { alert } = this.props;
+    return (
+      <div className="container-fluid">
+        <div>
+            {alert.message &&
+              <div className={`alert ${alert.type}`}>{alert.message}</div>
+              }
+              <Router history={history}>
+                <Switch>
+                  <PrivateRoute exact path="/" component={Home} />
+                  <Route path="/login" component={Login} />
+                </Switch>
+              </Router>
+            </div>
+      </div>
+    );
+  }
+}
+function mapStateToProps(state) {
+  const { alert } = state;
+  return {
+      alert
+  };
+}
+
+
+export default connect(mapStateToProps)(App);

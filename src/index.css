@@ -35,7 +35,3 @@ code {
 .header .active {
   color: #2c7613;
 }
-.btnLogout {
-  float:right;
-  color: rgb(12, 82, 85);
-}

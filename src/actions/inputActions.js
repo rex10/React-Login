@@ -1,4 +1,4 @@
-import actionTypes from '../actionTypes';
+import actionTypes from '../actions/actionTypes';
 
 export default {
   setInputTitle: title => ({

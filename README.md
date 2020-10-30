@@ -8,9 +8,6 @@
 - Install packages ` npm install` or `yarn install`
 
 # Third Step
-- Run server `npm run server`
-
-# Fourth Step
 - Run Application `npm start`
 
 # Login Credential

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import NoteItem from './NoteItem';
-import inputActions from '../redux/actions/inputActions';
-import './NotesSection.style.scss';
+import inputActions from '../actions/inputActions';
 
 const NotesSection = () => {
   const dispatch = useDispatch();
@@ -16,19 +15,20 @@ const NotesSection = () => {
 
   if(notes.length === 0) {
     return (
-      <div className="NotesSection__container__empty">
-        <p>There is no note yet. Please add one.</p>
+      <div className="container">
+        <p className="d-flex justify-content-center">There is no note yet. Please add one.</p>
       </div>  
     )
   }
 
   return (
-    <div className="NotesSection__container">
+    <>
       {notes.map((item, index) => {
 
         if(item) {
           return (
             <NoteItem
+              key={index+1}
               index={index}
               title={item.title}
               content={item.content}
@@ -40,7 +40,7 @@ const NotesSection = () => {
         }
         return null;
       })}
-    </div>
+    </>
   );
 };
 

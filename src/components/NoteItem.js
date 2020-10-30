@@ -1,8 +1,7 @@
 import React from 'react';
-import './NoteItem.styles.scss';
 import { useDispatch } from 'react-redux';
-import noteActions from '../redux/actions/noteActions';
-import inputActions from '../redux/actions/inputActions';
+import noteActions from '../actions/noteActions';
+import inputActions from '../actions/inputActions';
 
 
 const NoteItem = ({ index, title, content, onItemClicked}) => {
@@ -13,17 +12,18 @@ const NoteItem = ({ index, title, content, onItemClicked}) => {
     dispatch(inputActions.resetInputs())
   }
   return (
-    <div className="NoteItem__container">
-    <div
-    className="NodeItem__container__div"
-      role="button"
-      onClick={onItemClicked}
-    >
-      <h2>{title}</h2>
-      <p>{content}</p>
-      
-    </div>
-    <button className="btnDelete" onClick={deleteNote}>X</button>
+    <div className="list-group border-bottom">
+      <div
+        className="list-group item p-3"
+        role="button"
+        onClick={onItemClicked}
+      >
+        <div className="d-flex w-100 justify-content-between">
+          <h6 className="mb-1">{title}</h6>
+          <small className="text-muted" role="button" onClick={deleteNote} >X</small>
+        </div>
+          <p className="mb-1">{content}</p>
+      </div>
     </div>
   );
 };

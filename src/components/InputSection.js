@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import noteActions from '../redux/actions/noteActions';
-import inputActions from '../redux/actions/inputActions';
-import './inputSection.style.scss';
+import noteActions from '../actions/noteActions';
+import inputActions from '../actions/inputActions';
 
 const InputSection = () => {
   const id = useSelector(state => state.inputs.id);
@@ -33,52 +32,74 @@ const InputSection = () => {
     dispatch(noteActions.deleteNote(id))
     dispatch(inputActions.resetInputs())
   }
+  const btnSave = {
+      className : "btn btn-primary",
+      onClick : updateNote
+  }
 
   return (
-    <div className="InputSection__container">
+    <div className="container">
       <div
-        className="InputSection__container__btnWrapper"
+        className="d-flex p-2 justify-content-end"
       >
       {id === -1 && <button
+      className="btn btn-outline-secondary"
           onClick={addNote}
         >
-          {"ADD NOTE"}
+         <strong>+</strong>{" Add Note"}
         </button>}
       </div>
-        <strong>Title:</strong>
-      <input
-        type="text"
-        placeholder="Note title"
-        value={title}
-        onChange={e => 
-          dispatch(inputActions.setInputTitle(e.target.value))
-        }
-      />
-      <strong>Body:</strong>
-      <textarea
-        placeholder="Note content"
-        value={content}
-        onChange={e => 
-          dispatch(inputActions.setInputContent(e.target.value))
-        }
-      ></textarea>
-      <div
-        className="InputSection__container__btnWrapper"
-      >
-        {id !== -1 && <button
-          onClick={updateNote}
-        >
-          {"UPDATE NOTE"}
-        </button> }     
-        {id !== -1 &&
-          <button
-            onClick={deleteNote}
-            style={{ marginLeft: '1em', backgroundColor: 'red' }}
+      <form>
+            <div className="form-group p-2" >
+              <strong htmlFor="title" >Title:</strong>
+              <input
+                className="form-control"
+                id="title"
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={e => 
+                  dispatch(inputActions.setInputTitle(e.target.value))
+                }
+              />
+            </div>
+            <div className="form-group p-2">
+              <strong htmlFor="body" >Body:</strong>
+              <textarea
+              rows="10"
+              className="form-control"
+                placeholder="Body"
+                id="body"
+                value={content}
+                onChange={e => 
+                  dispatch(inputActions.setInputContent(e.target.value))
+                }
+              />
+          </div>
+          <div
+            className="d-flex p-2 justify-content-end"
           >
-            DELETE NOTE
-          </button>
-        }
-      </div>
+              {id === -1 ? <button
+                {...btnSave}
+                disabled
+              >
+                {"SAVE"}
+              </button> :
+              
+              <button
+                {...btnSave}
+              >{"SAVE"}</button>
+              }
+              {id !== -1 &&
+                <button
+                  onClick={deleteNote}
+                  className="btn btn-danger ml-1"
+                >
+                  DELETE NOTE
+                </button>
+              }
+            </div>
+      </form>
     </div>
   );
 };
